@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t gbutchers/react-test -f ./client/Dockerfile.dev ./client
+  
+script:
+  - docker run gbutchers/react-test npm run test -- --coverage
+
+after_success:
+  - docker build -t gbutchers/multi-client ./client  
+  - docker build -t gbutchers/multi-nginx ./nginx  
+  - docker build -t gbutchers/multi-server ./server  
+  - docker build -t gbutchers/multi-worker ./worker  
+# Login to the Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# Push those images to the Docker Hub
+  - docker push gbutchers/multi-client
+  - docker push gbutchers/multi-nginx
+  - docker push gbutchers/multi-server
+  - docker push gbutchers/multi-worker
