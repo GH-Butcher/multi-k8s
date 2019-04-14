@@ -15,7 +15,7 @@ after_success:
   - docker build -t gbutchers/multi-worker ./worker  
 # Login to the Docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-# Push those images to the Docker Hub
+# Push those images to the Docker Hub Repo
   - docker push gbutchers/multi-client
   - docker push gbutchers/multi-nginx
   - docker push gbutchers/multi-server
