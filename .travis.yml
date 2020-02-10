@@ -20,6 +20,7 @@ after_success:
   - docker push gbutchers/multi-nginx
   - docker push gbutchers/multi-server
   - docker push gbutchers/multi-worker
+  
 # deploy:
 #   provider: elasticbeanstalk
 #   region: eu-west-1
