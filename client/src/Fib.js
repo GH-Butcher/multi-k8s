@@ -45,7 +45,7 @@ class Fib extends Component {
 
   renderValues() {
     const entries = [];
-    if (this.state.values && this.state.values.indexOf("<!doctype html>") === -1) {
+    if (Object.keys(this.state.values).length !== 0 && this.state.values.indexOf("<!doctype html>") === -1) {
       for (let key in this.state.values) {
         entries.push(
           <div key={key}>
