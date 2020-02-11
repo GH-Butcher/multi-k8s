@@ -16,7 +16,7 @@ class Fib extends Component {
   async fetchValues() {
     const values = await axios.get("/api/values/current");
     this.setState({
-      values: Object.keys(values.data).length ? values.data : "none"
+      values: Object.keys(values.data).length != 0 ? values.data : "none"
     });
   }
 
@@ -37,7 +37,7 @@ class Fib extends Component {
   };
 
   renderSeenIndexes() {
-    return this.state.seenIndexes.length
+    return this.state.seenIndexes.length != 0
       ? this.state.seenIndexes.map(({ number }) => number).join(", ")
       : "none";
   }
