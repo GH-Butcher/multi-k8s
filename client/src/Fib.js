@@ -45,8 +45,7 @@ class Fib extends Component {
 
   renderValues() {
     const entries = [];
-    console.log("VAlues Lenght: ", Object.keys(this.state.values).length)
-    if (Object.keys(this.state.values).length !== 0) {
+    if (this.state.values.indexOf("<!doctype html>") === -1) {
       for (let key in this.state.values) {
         entries.push(
           <div key={key}>
@@ -54,6 +53,13 @@ class Fib extends Component {
           </div>
         );
       }
+    }
+    else{
+        entries.push(
+            <div key="1">
+              For index 'none' I calculated 'none'
+            </div>
+          );
     }
     return entries;
   }
