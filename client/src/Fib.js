@@ -16,7 +16,7 @@ class Fib extends Component {
   async fetchValues() {
     const values = await axios.get("/api/values/current");
     this.setState({
-      values: typeof values.data !== String ? values.data : "none"
+      values: values.data 
     });
   }
 
@@ -45,7 +45,8 @@ class Fib extends Component {
 
   renderValues() {
     const entries = [];
-    if (this.state.values !== "none") {
+    console.log("VAlues Lenght: ", Object.keys(this.state.values).length)
+    if (Object.keys(this.state.values).length !== 0) {
       for (let key in this.state.values) {
         entries.push(
           <div key={key}>
