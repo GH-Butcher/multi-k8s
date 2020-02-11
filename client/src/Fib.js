@@ -16,7 +16,7 @@ class Fib extends Component {
   async fetchValues() {
     const values = await axios.get("/api/values/current");
     this.setState({
-      values: Object.keys(values.data).length !== 0 ? values.data : "none"
+      values: typeof values.data !== String ? values.data : "none"
     });
   }
 
@@ -38,18 +38,21 @@ class Fib extends Component {
   };
 
   renderSeenIndexes() {
-    return this.state.seenIndexes.length !== 0 ? this.state.seenIndexes.map(({ number }) => number).join(", "): "none";
+    return this.state.seenIndexes.length !== 0
+      ? this.state.seenIndexes.map(({ number }) => number).join(", ")
+      : "none";
   }
 
   renderValues() {
     const entries = [];
-
-    for (let key in this.state.values) {
-      entries.push(
-        <div key={key}>
-          For index {key} I calculated {this.state.values[key]}
-        </div>
-      );
+    if (this.state.values !== "none") {
+      for (let key in this.state.values) {
+        entries.push(
+          <div key={key}>
+            For index {key} I calculated {this.state.values[key]}
+          </div>
+        );
+      }
     }
     return entries;
   }
