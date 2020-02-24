@@ -3,6 +3,7 @@ services:
    - docker   
 before_install:
   - pip install awscli --upgrade --user
+  - mkdir -p ~/.kube && touch ~/.kube/config
   - mkdir -p ~/.aws && touch ~/.aws/config
   - echo '[default]' >> ~/.aws/config
   - echo 'aws_access_key_id=$AWS_ACCESS_KEY' >> ~/.aws/config
