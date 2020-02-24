@@ -1,9 +1,13 @@
 sudo: required
 services: 
-   - docker
+   - docker   
 before_install:
   - pip install awscli --upgrade --user
-  - aws --version
+  - mkdir -o ~/.aws && touch ~/.aws/config
+  - echo '[default]' >> ~/.aws/config
+  - echo 'aws_access_key_id=$AWS_ACCESS_KEY' >> ~/.aws/config
+  - echo 'aws_secret_access_key=$AWS_SECRET_KEY' >> ~/.aws/config
+  - echo 'region=$AWS_REGION' >> ~/.aws/config
   - curl -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/kubectl
   - chmod +x $TRAVIS_BUILD_DIR/kubectl
   - mkdir -p $HOME/bin && cp $TRAVIS_BUILD_DIR/kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
@@ -14,3 +18,4 @@ before_install:
   - mkdir -p $HOME/bin && cp $TRAVIS_BUILD_DIR/aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
   - echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
   - aws-iam-authenticator help
+  - aws eks --region $AWS_REGION update-kubeconfig --name pegasus-eks-test-euc1
