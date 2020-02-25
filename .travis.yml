@@ -1,6 +1,10 @@
 sudo: required
 services: 
-   - docker   
+   - docker
+env:
+  global:
+    - GIT_SHA=$(git rev-parse HEAD)
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1  
 before_install:
   - pip install awscli --upgrade --user
   - mkdir -p ~/.kube && touch ~/.kube/config
@@ -18,3 +22,17 @@ before_install:
   - mkdir -p $HOME/bin && cp $TRAVIS_BUILD_DIR/aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
   - echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
   - aws eks --region $AWS_REGION update-kubeconfig --name $EKS_CLUSTER_NAME
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t gbutchers/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true gbutchers/docker-react npm run test
+
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master
+
+
+
