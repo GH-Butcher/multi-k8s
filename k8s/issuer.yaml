@@ -11,7 +11,7 @@ spec:
     solvers:
       - selector:
           dnsZones:
-            - "dv.itero.cloud"
+            - "itero.cloud"
         dns01:
           route53:
             region: eu-central-1
