@@ -1,0 +1,23 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: dv-itero-cloud-tls
+spec:  
+  secretName: dv-itero-cloud
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: dv.itero.cloud
+  dnsNames:
+    - dv.itero.cloud
+    - www.dv.itero.cloud
+  acme:
+    config:
+      - http01:
+          ingressClass: nginx
+        domains:
+          - dv.itero.cloud
+          - www.dv.itero.cloud
+
+      
+         

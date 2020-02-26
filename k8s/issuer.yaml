@@ -1,0 +1,22 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: "gleb@masscalls.com"
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+      - selector:
+          dnsZones:
+            - "dv.itero.cloud"
+        dns01:
+          route53:
+            region: eu-central-1
+            hostedZoneID: Z1RLQGHRHND4V2 # optional, see bpolicy above
+            role: arn:aws:iam::440130807111:role/k8s-dns-manager-role
+        http01:
+          ingress:
+            class: nginx      
